@@ -4276,7 +4276,8 @@ int inside(long x, long y, short sectnum)
 		y1 = wal->y-y; y2 = wall[wal->point2].y-y;
 		if ((y1^y2) < 0)
 		{
-			x1 = wal->x-x; x2 = wall[wal->point2].x-x;
+			x1 = wal->x-x;
+            x2 = wall[wal->point2].x-x;
 			if ((x1^x2) >= 0) cnt ^= x1; else cnt ^= (x1*y2-x2*y1)^y2;
 		}
 		wal++; i--;
