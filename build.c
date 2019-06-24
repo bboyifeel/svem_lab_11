@@ -6771,10 +6771,10 @@ int main(int argc,char **argv)
 	char ch, quitflag;
 	long i, j, k;
 
-    _platform_init(argc, argv, "BUILD editor by Ken Silverman", "BUILD");
+    // _platform_init(argc, argv, "BUILD editor by Ken Silverman", "BUILD");
 
-    if (getenv("BUILD_NOPENTIUM") != NULL)
-        setmmxoverlay(0);
+    // if (getenv("BUILD_NOPENTIUM") != NULL)
+    //     setmmxoverlay(0);
 
 	editstatus = 1;
 	if (argc >= 2)
@@ -6786,39 +6786,39 @@ int main(int argc,char **argv)
 	else
 		strcpy(boardfilename,"newboard.map");
 
-	ExtInit();
-	_initkeys();
-	inittimer();
+	// ExtInit();
+	// _initkeys();
+	// inittimer();
 
-	loadpics("tiles000.art");
-	loadnames();
+	// loadpics("tiles000.art");
+	// loadnames();
 
-	strcpy(kensig,"BUILD by Ken Silverman");
-	initcrc();
+	// strcpy(kensig,"BUILD by Ken Silverman");
+	// initcrc();
 
-	if (setgamemode(vidoption,xdim,ydim) < 0)
-	{
-		ExtUnInit();
-		uninitkeys();
-		uninittimer();
-		printf("%ld * %ld not supported in this graphics mode\n",xdim,ydim);
-		exit(0);
-	}
+	// if (setgamemode(vidoption,xdim,ydim) < 0)
+	// {
+	// 	ExtUnInit();
+	// 	uninitkeys();
+	// 	uninittimer();
+	// 	printf("%ld * %ld not supported in this graphics mode\n",xdim,ydim);
+	// 	exit(0);
+	// }
 
-	k = 0;
-	for(i=0;i<256;i++)
-	{
-		j = ((long)palette[i*3])+((long)palette[i*3+1])+((long)palette[i*3+2]);
-		if (j > k) { k = j; whitecol = i; }
-	}
+	// k = 0;
+	// for(i=0;i<256;i++)
+	// {
+	// 	j = ((long)palette[i*3])+((long)palette[i*3+1])+((long)palette[i*3+2]);
+	// 	if (j > k) { k = j; whitecol = i; }
+	// }
 
-	initmenupaths(argv[0]);
-	menunamecnt = 0;
-	menuhighlight = 0;
+	// initmenupaths(argv[0]);
+	// menunamecnt = 0;
+	// menuhighlight = 0;
 
-	for(i=0;i<MAXSECTORS;i++) sector[i].extra = -1;
-	for(i=0;i<MAXWALLS;i++) wall[i].extra = -1;
-	for(i=0;i<MAXSPRITES;i++) sprite[i].extra = -1;
+	// for(i=0;i<MAXSECTORS;i++) sector[i].extra = -1;
+	// for(i=0;i<MAXWALLS;i++) wall[i].extra = -1;
+	// for(i=0;i<MAXSPRITES;i++) sprite[i].extra = -1;
 
 	if (loadboard(boardfilename,&posx,&posy,&posz,&ang,&cursectnum) == -1)
 	{
@@ -6833,101 +6833,101 @@ int main(int argc,char **argv)
 		overheadeditor();
 		keystatus[buildkeys[14]] = 0;
 	}
-	else
-	{
-		 ExtLoadMap(boardfilename);
-	}
+	// else
+	// {
+	// 	 ExtLoadMap(boardfilename);
+	// }
 
-	updatenumsprites();
+	// updatenumsprites();
 
-	startposx = posx;
-	startposy = posy;
-	startposz = posz;
-	startang = ang;
-	startsectnum = cursectnum;
+	// startposx = posx;
+	// startposy = posy;
+	// startposz = posz;
+	// startang = ang;
+	// startsectnum = cursectnum;
 
-	totalclock = 0;
+	// totalclock = 0;
 
-	quitflag = 0;
-	while (quitflag == 0)
-	{
-		ExtPreCheckKeys();
+	// quitflag = 0;
+	// while (quitflag == 0)
+	// {
+	// 	ExtPreCheckKeys();
 
-		drawrooms(posx,posy,posz,ang,horiz,cursectnum);
-		ExtAnalyzeSprites();
-		drawmasks();
+	// 	drawrooms(posx,posy,posz,ang,horiz,cursectnum);
+	// 	ExtAnalyzeSprites();
+	// 	drawmasks();
 
-		ExtCheckKeys();
+	// 	ExtCheckKeys();
 
-		nextpage();
-		synctics = totalclock-lockclock;
-		lockclock += synctics;
+	// 	nextpage();
+	// 	synctics = totalclock-lockclock;
+	// 	lockclock += synctics;
 
-		if (keystatus[1] > 0)
-		{
-			keystatus[1] = 0;
-			printext256(0,0,whitecol,0,"Really want to quit?",0);
-			nextpage();
-			synctics = totalclock-lockclock;
-			lockclock += synctics;
+	// 	if (keystatus[1] > 0)
+	// 	{
+	// 		keystatus[1] = 0;
+	// 		printext256(0,0,whitecol,0,"Really want to quit?",0);
+	// 		nextpage();
+	// 		synctics = totalclock-lockclock;
+	// 		lockclock += synctics;
 
-			while ((keystatus[1]|keystatus[0x1c]|keystatus[0x39]|keystatus[0x31]) == 0)
-			{
-                    /*
-                     * rcg08212000 Rewrote this to prompt for changes in
-                     *  graphics mode, rather than through stdio later.
-                     */
-                _idle();
+	// 		while ((keystatus[1]|keystatus[0x1c]|keystatus[0x39]|keystatus[0x31]) == 0)
+	// 		{
+ //                    /*
+ //                     * rcg08212000 Rewrote this to prompt for changes in
+ //                     *  graphics mode, rather than through stdio later.
+ //                     */
+ //                _idle();
 
-				if (keystatus[0x15] != 0)
-                {
-                    keystatus[0x15] = 0;
-                    quitflag = 1;
-                    if (asksave)
-                    {
-                        asksave = 0;
-            			printext256(0,0,whitecol,0,"Save changes?       ",0);
-            			nextpage();
+	// 			if (keystatus[0x15] != 0)
+ //                {
+ //                    keystatus[0x15] = 0;
+ //                    quitflag = 1;
+ //                    if (asksave)
+ //                    {
+ //                        asksave = 0;
+ //            			printext256(0,0,whitecol,0,"Save changes?       ",0);
+ //            			nextpage();
 
-                        while ((keystatus[0x15]|keystatus[0x31]) == 0)
-                            _idle();
+ //                        while ((keystatus[0x15]|keystatus[0x31]) == 0)
+ //                            _idle();
 
-                        if (keystatus[0x15])  /* 'y' pressed. */
-                        {
-                            updatesector(startposx,startposy,&startsectnum);
-                            saveboard(boardfilename,&startposx,&startposy,&startposz,&startang,&startsectnum);
-                            ExtSaveMap(boardfilename);
-                        } /* if */
-                    } /* if */
-                    break;
-                } /* if */
-			}
-		}
-	}
-	uninittimer();
-	uninitkeys();
-	ExtUnInit();
-	uninitengine();
-	setvmode(0x3);
+ //                        if (keystatus[0x15])  /* 'y' pressed. */
+ //                        {
+ //                            updatesector(startposx,startposy,&startsectnum);
+ //                            saveboard(boardfilename,&startposx,&startposy,&startposz,&startang,&startsectnum);
+ //                            ExtSaveMap(boardfilename);
+ //                        } /* if */
+ //                    } /* if */
+ //                    break;
+ //                } /* if */
+	// 		}
+	// 	}
+	// }
+	// uninittimer();
+	// uninitkeys();
+	// ExtUnInit();
+	// uninitengine();
+	// setvmode(0x3);
 
-	if (asksave)
-	{
-		printf("Save changes?\n");
-		do
-		{
-			ch = getchar();
-		}
-		while ((ch != 'y') && (ch != 'Y') && (ch != 'n') && (ch != 'N'));
-		if ((ch == 'y') || (ch == 'Y'))
-		{
-			updatesector(startposx,startposy,&startsectnum);
-			saveboard(boardfilename,&startposx,&startposy,&startposz,&startang,&startsectnum);
-			ExtSaveMap(boardfilename);
-		}
-	}
-	printf("Memory status: %ld(%ld) bytes\n",cachesize,artsize);
-	printf("%s\n",kensig);
-    printf("%s\n",PORTSIG);
+	// if (asksave)
+	// {
+	// 	printf("Save changes?\n");
+	// 	do
+	// 	{
+	// 		ch = getchar();
+	// 	}
+	// 	while ((ch != 'y') && (ch != 'Y') && (ch != 'n') && (ch != 'N'));
+	// 	if ((ch == 'y') || (ch == 'Y'))
+	// 	{
+	// 		updatesector(startposx,startposy,&startsectnum);
+	// 		saveboard(boardfilename,&startposx,&startposy,&startposz,&startang,&startsectnum);
+	// 		ExtSaveMap(boardfilename);
+	// 	}
+	// }
+	// printf("Memory status: %ld(%ld) bytes\n",cachesize,artsize);
+	// printf("%s\n",kensig);
+ //    printf("%s\n",PORTSIG);
 	return(0);
 }
 
